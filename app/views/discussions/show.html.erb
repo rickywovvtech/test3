@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+<h3><%= "Author : #{(User.find(@discussion.user_id)).name}" %></h3>
+<p>
+  <strong>Description:</strong>
+  <%= @discussion.description %>
+</p>
+
+<p>
+  <strong>Topic:</strong>
+  <%= @discussion.topic %>
+</p>
+
+
+<% Comment.all.each do |comment| %>
+  <p>
+  <%="#{User.find(comment.user_id).name} commented on #{comment.created_at.strftime("%B %e,%Y")}"  %>
+  <%= (comment.comment).html_safe %></p>
+<%end%>
+
+<form action="/users/discussions/submit_comment" method="post" >
+<%= hidden_field_tag :authenticity_token ,form_authenticity_token %>
+<%= hidden_field_tag :id ,@discussion.id %>
+<label for="uname">Add Comment</label>
+<input type="text" placeholder="Enter Comment" name="uname" required>
+<button type="submit">Comment</button>
+</form>

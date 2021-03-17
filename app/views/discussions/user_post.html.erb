@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+<h3><%=" Author :#{User.find(@user_id).name}"%></h3>
+<% follow = Follow.find_by(:user_id=>@user_id )%>
+<% if follow.present? %>
+   <h3> Followed </h3>
+<%else%>
+  <h3><%= link_to "Follow" ,{:controller=>'discussions',:action=>'follow_user',:id=>@user_id},:method=>:post %></h3>
+<%end%>
+  <table>
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>Topic</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @discussions.each do |discussion| %>
+      <tr>
+        <td><%= discussion.description %></td>
+        <td><%= discussion.topic %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
